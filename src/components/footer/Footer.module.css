@@ -3,8 +3,10 @@ footer {
     background-color: #1A1A2E;
     color: white;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 10px;
 }
 footer a {
     color: #E91E63;

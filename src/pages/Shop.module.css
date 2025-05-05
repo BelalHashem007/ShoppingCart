@@ -1,0 +1,25 @@
+.card {
+    width: 440px;
+    padding: 10px;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    height: 450px;
+}
+.cardImg {
+    width: 400px;
+    height:300px;
+}
+.products {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    list-style-type: none;
+}
+.cardPrice {
+    opacity: 0.6;
+}

@@ -1,0 +1,21 @@
+.loading {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.loadingCard {
+  width: 400px;
+  height: 300px;
+  background-image: linear-gradient(to right, rgba(140, 140, 140, 0.05) 0%, rgba(140, 140, 140, 0.1) 15%, rgba(140, 140, 140, 0.05) 30%);
+  background-position: 1200px;
+  animation: loading 3s linear infinite;
+}
+@keyframes loading {
+  from {
+    background-position: -1200px 0;
+  }
+  to {
+    background-position: 1200px 0;
+  }
+}
