@@ -4,8 +4,8 @@
     padding: 20px;
     max-height: 100px;
     box-shadow: 0 1px 3px rgb(210, 210, 210);
-    background-color: white;
-    color: black;
+    background-color: #2B2D42;
+    color: #FFFFFF;
 }
 .logo {
     font-size: 1.5rem;
@@ -23,7 +23,7 @@
     margin-right: 20px;
 }
 ul li:hover:not(:nth-child(3)) {
-    border-bottom: 1px solid red;
+    border-bottom: 1px solid #FF6B6B;
 }
 ul li {
     cursor: pointer;
@@ -32,11 +32,9 @@ ul li {
     text-decoration: none;
     color: inherit;
 }
-.link span{
-    color: red;
-}
 svg {
     width: 30px;
     height: 25px;
     vertical-align: -4px;
+    margin: 0 auto;
 }

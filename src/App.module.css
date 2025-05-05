@@ -1,7 +1,11 @@
 *{
     box-sizing: border-box;
-    font-size: 24px;
     margin: 0;
     padding: 0;
     font-family: 'Courier New', Courier, monospace;
+}
+.app {
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
 }

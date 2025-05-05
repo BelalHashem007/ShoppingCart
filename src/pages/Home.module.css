@@ -1,0 +1,55 @@
+.home{
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+}
+.topSection .title {
+  text-align: center;
+}
+.topSection {
+  padding: 50px 100px 30px 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border: 2px solid #a0a4a8;
+  margin: 0 auto;
+  max-width: 1200px;
+  color: inherit;
+  overflow: hidden;
+  background: linear-gradient(to bottom, #f8f9fa 0%, #e9ecef 100%);
+}
+.shopBtn {
+  width: 160px  ;
+  height: 40px;
+  font-size: 1rem;
+  background-color: #03a9f4;
+  border: none;
+  border-radius: 10px;
+  color: white;
+}
+.shopBtn:hover {
+  cursor: pointer;
+  transform: scale(1.08);
+}
+.topSection .shopBtn {
+  margin: 0 auto;
+  margin-top: 20px;
+}
+.bottomSection {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  align-items: center;
+}
+.bottomSection div {
+  max-width: 500px;
+  font-size: 0.875rem;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  text-align: center;
+}
+.bottomSection svg {
+  width: 70px;
+  height: 70px;
+}
