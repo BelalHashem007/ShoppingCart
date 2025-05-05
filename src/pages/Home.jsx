@@ -1,4 +1,5 @@
 import styles from "./Home.module.css";
+import { Link } from "react-router-dom";
 export default function Home() {
   return (
     <main className={styles.home}>
@@ -13,7 +14,7 @@ export default function Home() {
           offers handpicked just for you. Shop premium quality at prices you’ll
           love — only while supplies last!
         </p>
-        <button className={styles.shopBtn}>Shop Now</button>
+        <Link to="/shop" className={styles.shopLink}><button className={styles.shopBtn}>Shop Now</button></Link>
       </section>
       <section className={styles.bottomSection}>
         <div className={styles.shipping}>
