@@ -5,7 +5,11 @@
     display: flex;
     flex-direction: column;
     gap: 5px;
-    height: 450px;
+    height: 400px;
+}
+.card:hover {
+    cursor: pointer;
+    transform: scale(1.08);
 }
 .cardImg {
     width: 400px;
@@ -22,4 +26,22 @@
 }
 .cardPrice {
     opacity: 0.6;
+}
+.btnsContainer {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+.pageBtn{
+    width: 40px;
+    height: 50px;
+    border: none;
+    font-size: 1rem;
+}
+.pageBtn:hover {
+    cursor: pointer;
+    background-color: lightblue;
+}
+.pageBtn.active {
+    background-color: lightblue;
 }

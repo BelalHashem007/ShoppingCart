@@ -1,0 +1,114 @@
+.productImg {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+}
+.product{
+    display: grid;
+    grid-template-columns: 0.7fr 1fr;
+    gap: 40px;
+    padding: 20px;
+}
+.addToCartContainer button:not(:last-child) {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+    text-align: center;
+    background-color: white;
+    border: 1px solid rgb(142, 142, 142);
+    opacity: 0.8;
+    border-radius: 4px;
+}
+.addToCartContainer button:hover:not(:disabled):not(:last-child) {
+    cursor: pointer;
+    background-color: lightgrey;
+}
+.addToCartContainer {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.productDetails{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.addToCartBtn {
+    background-color: #F44336;
+    color: white;
+    height: 40px;
+    width: 200px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease-in;
+}
+.addToCartBtn:hover {
+    cursor: pointer;
+    background-color: #795548;
+}
+.overviewContainer{
+    margin-top: 50px;
+    border: 1px solid lightgray;
+    background-color: white;
+    padding: 10px;
+    margin-right: 10px;
+}
+.overviewContainer h3{
+    margin-bottom: 5px;
+}
+.overviewContainer p{
+    font-size: 0.875rem;
+}
+.overviewText {
+    transition: all 0.3s ease;
+  }
+  
+  .clampedText {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .toggleButton {
+    background: none;
+    border: none;
+    color: #0066cc;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    padding: 0;
+  }
+  
+  .toggleButton:hover {
+    text-decoration: underline;
+  }
+  .productSpecification{
+    grid-area: 2/1/3/3;
+    justify-self: center;
+    width: 80%;
+    border: 1px solid lightgray;
+    background-color: white;
+    padding: 30px;
+  }
+  table, th, td{
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+  }
+  table {
+    width: 80%;
+    margin: 0 auto;
+  }
+  th {
+    width: 33%;
+  }
+  tr:first-child{
+    height: 60px;
+    background-color: lightgrey;
+  }
+  tr:nth-child(2){
+    height: 50px;
+  }

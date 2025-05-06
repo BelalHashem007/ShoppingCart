@@ -3,10 +3,12 @@ import styles from "./Shop.module.css";
 import Loading from "../components/loading/Loading";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
+import { useNavigate } from "react-router-dom";
+import useProducts from "../components/getData/GetData";
 
-function Card({ model, image, price }) {
+function Card({ model, image, price, clickHandler, id }) {
   return (
-    <li className={styles.card}>
+    <li className={styles.card} onClick={() => clickHandler(id)}>
       <LazyLoadImage
         src={image}
         alt={model}
@@ -22,47 +24,56 @@ function Card({ model, image, price }) {
     </li>
   );
 }
-
-function useProducts() {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    fetch("https://fakestoreapi.in/api/products?limit=150", { mode: "cors" })
-      .then((response) => {
-        if (response.status >= 400) {
-          throw new Error("server error");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data.products);
-        setData(data.products);
-      })
-      .catch((err) => setError(err))
-      .finally(() => setLoading(false));
-  }, []);
-  return { data, loading, error };
-}
 export default function Shop() {
   const { data, loading, error } = useProducts();
-  const productPerPage = 20;
-  //const totalPages = data.length / productPerPage;
+  const [currentPage, setCurrentPage] = useState(1);
+  const navigate = useNavigate();
   if (loading) return <Loading />;
   if (error) return <div>{error}</div>;
+  const productPerPage = 20;
+  const startIndex = productPerPage * (currentPage - 1);
+  const endIndex = startIndex + productPerPage;
+  const totalPages = Math.round(data.length / productPerPage);
+  const currentData = data.slice(startIndex, endIndex);
+  const pages = [];
+  for (let i = 1; i <= totalPages; i++) {
+    pages.push(i);
+  }
+  function clickHandler(id) {
+    navigate(`/shop/${id}`);
+  }
+  function clickPageHandler(page) {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
   return (
-    <main>
-      <ul className={styles.products}>
-        {data.map((product) => (
-          <Card
-            key={product.id}
-            model={product.model}
-            image={product.image}
-            price={product.price}
-          />
+    <>
+      <main>
+        <ul className={styles.products}>
+          {currentData.map((product) => (
+            <Card
+              key={product.id}
+              model={product.model}
+              image={product.image}
+              price={product.price}
+              clickHandler={clickHandler}
+              id={product.id}
+            />
+          ))}
+        </ul>
+      </main>
+      <div className={styles.btnsContainer}>
+        {pages.map((page) => (
+          <button
+            className={`${styles.pageBtn} ${
+              page == currentPage && styles.active
+            }`}
+            onClick={() => clickPageHandler(page)}
+          >
+            {page}
+          </button>
         ))}
-      </ul>
-    </main>
+      </div>
+    </>
   );
 }

@@ -6,6 +6,9 @@
     box-shadow: 0 1px 3px rgb(210, 210, 210);
     background-color: #2B2D42;
     color: #FFFFFF;
+    position: sticky;
+    top: 0;
+    z-index: 2;
 }
 .logo {
     font-size: 1.5rem;
