@@ -2,9 +2,15 @@ import { useParams } from "react-router-dom";
 import { useProduct } from "../getData/GetData";
 import styles from "./Product.module.css";
 import { useState, useEffect, useRef } from "react";
+import { useOutletContext } from "react-router-dom";
+import PropTypes from "prop-types";
 
-function AddToCart() {
+function AddToCart({product}) {
   const [quantity, setQuantity] = useState(1);
+  const {setCart} = useOutletContext();
+  function addToCartHandler(){
+    setCart((prev)=> [...prev,{product,quantity}])
+  }
   return (
     <div className={styles.addToCartContainer}>
       <button
@@ -24,10 +30,14 @@ function AddToCart() {
       >
         +
       </button>
-      <button className={styles.addToCartBtn}>Add to cart</button>
+      <button className={styles.addToCartBtn} onClick={addToCartHandler}>Add to cart</button>
     </div>
   );
 }
+AddToCart.propTypes = {
+  product: PropTypes.object,
+}
+
 export default function ProductDetail() {
   const { id } = useParams();
   const { product, loading, error } = useProduct(id);
@@ -53,11 +63,15 @@ export default function ProductDetail() {
           src={product.image}
           alt={product.model}
           className={styles.productImg}
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = "/src/assets/No_Image_Available.jpg";
+          }}
         />
         <div className={styles.productDetails}>
           <h3>{product.title}</h3>
           <p>${product.price}</p>
-          <AddToCart />
+          <AddToCart product={product}/>
           <div className={styles.overviewContainer}>
             <h3>OVERVIEW</h3>
             <p

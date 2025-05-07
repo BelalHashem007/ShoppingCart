@@ -1,70 +1,40 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styles from "./Shop.module.css";
 import Loading from "../components/loading/Loading";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { useNavigate } from "react-router-dom";
 import useProducts from "../components/getData/GetData";
+import PropTypes from "prop-types";
 
-function Card({ model, image, price, clickHandler, id }) {
+export function Card({  clickHandler, product }) {
   return (
-    <li className={styles.card} onClick={() => clickHandler(id)}>
+    <li className={styles.card} onClick={() => clickHandler(product.id)}>
       <LazyLoadImage
-        src={image}
-        alt={model}
+        src={product.image}
+        alt={product.model}
         effect="blur"
         className={styles.cardImg}
         onError={(e) => {
           e.target.onerror = null;
           e.target.src = "src/assets/No_Image_Available.jpg";
-        }}
+        }}  
       />
-      <div className={styles.cardTitle}>{model}</div>
-      <div className={styles.cardPrice}>${price}</div>
+      <p className={styles.cardTitle}>{product.model}</p>
+      <p className={styles.cardPrice}>${product.price}</p>
     </li>
   );
 }
-export default function Shop() {
-  const { data, loading, error } = useProducts();
-  const [currentPage, setCurrentPage] = useState(1);
-  const navigate = useNavigate();
-  if (loading) return <Loading />;
-  if (error) return <div>{error}</div>;
-  const productPerPage = 20;
-  const startIndex = productPerPage * (currentPage - 1);
-  const endIndex = startIndex + productPerPage;
-  const totalPages = Math.round(data.length / productPerPage);
-  const currentData = data.slice(startIndex, endIndex);
-  const pages = [];
-  for (let i = 1; i <= totalPages; i++) {
-    pages.push(i);
-  }
-  function clickHandler(id) {
-    navigate(`/shop/${id}`);
-  }
-  function clickPageHandler(page) {
-    setCurrentPage(page);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
+Card.propTypes = {
+  clickHandler: PropTypes.func,
+  product: PropTypes.object,
+}
+export function Pagination({pages,currentPage, clickPageHandler}){
   return (
-    <>
-      <main>
-        <ul className={styles.products}>
-          {currentData.map((product) => (
-            <Card
-              key={product.id}
-              model={product.model}
-              image={product.image}
-              price={product.price}
-              clickHandler={clickHandler}
-              id={product.id}
-            />
-          ))}
-        </ul>
-      </main>
-      <div className={styles.btnsContainer}>
+    <div className={styles.btnsContainer}>
         {pages.map((page) => (
           <button
+          key={page}
             className={`${styles.pageBtn} ${
               page == currentPage && styles.active
             }`}
@@ -74,6 +44,48 @@ export default function Shop() {
           </button>
         ))}
       </div>
+  );
+}
+Pagination.propTypes= {
+  pages: PropTypes.array,
+  currentPage: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  clickPageHandler: PropTypes.func,
+}
+
+const productPerPage = 20;
+export function Shop() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const { data, loading, error } = useProducts(currentPage,productPerPage);
+  const navigate = useNavigate();
+  if (loading) return <Loading />;
+  if (error) return <div>{error}</div>;
+  const totalPages = Math.round(150 / productPerPage);
+  const pages = [];
+  for (let i = 1; i <= totalPages; i++) {
+    pages.push(i);
+  }
+  function clickHandler(id) {
+    navigate(`/shop/${id}`);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+  function clickPageHandler(page) {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+  return (
+    <>
+      <main>
+        <ul className={styles.products}>
+          {data.map((product) => (
+            <Card
+              key={product.id}
+              product={product}
+              clickHandler={clickHandler}
+            />
+          ))}
+        </ul>
+      </main>
+      <Pagination pages={pages} clickPageHandler={clickPageHandler} currentPage={currentPage}/>
     </>
   );
 }

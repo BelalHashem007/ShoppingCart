@@ -5,7 +5,8 @@
     font-family: 'Courier New', Courier, monospace;
 }
 .app {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: 100px 1fr 80px;
     gap: 100px;
+    min-height: 100vh;
 }

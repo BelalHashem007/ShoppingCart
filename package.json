@@ -11,6 +11,8 @@
     "test": "vitest"
   },
   "dependencies": {
+    "eslint-plugin-react": "^7.37.5",
+    "prop-types": "^15.8.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-lazy-load-image-component": "^1.6.3",
@@ -20,6 +22,7 @@
     "@eslint/js": "^9.22.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react": "^4.3.4",
