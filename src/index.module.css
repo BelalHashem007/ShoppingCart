@@ -5,3 +5,7 @@ body {
     background-color: #F8F9FA;
     line-height: 1.5;
 }
+:root {
+    --toastify-toast-top:100px;
+    --toastify-color-progress-light: #F44336;
+}

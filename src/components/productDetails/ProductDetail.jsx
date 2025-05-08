@@ -4,12 +4,27 @@ import styles from "./Product.module.css";
 import { useState, useEffect, useRef } from "react";
 import { useOutletContext } from "react-router-dom";
 import PropTypes from "prop-types";
+import { toast,ToastContainer } from "react-toastify";
 
-function AddToCart({product}) {
+function AddToCart({ product }) {
   const [quantity, setQuantity] = useState(1);
-  const {setCart} = useOutletContext();
-  function addToCartHandler(){
-    setCart((prev)=> [...prev,{product,quantity}])
+  const { cart, setCart } = useOutletContext();
+  function addToCartHandler() {
+    if (cart.filter((item) => item.product.id == product.id).length == 1) {
+      setCart((prev) =>
+        prev.map((item) =>
+          item.product.id == product.id
+            ? { ...item, quantity: item.quantity + quantity }
+            : item
+        )
+      );
+      setQuantity(1);
+      toast("Product added to cart!");
+    } else {
+      setCart((prev) => [...prev, { product, quantity }]);
+      setQuantity(1);
+      toast("Product added to cart!");
+    }
   }
   return (
     <div className={styles.addToCartContainer}>
@@ -30,13 +45,15 @@ function AddToCart({product}) {
       >
         +
       </button>
-      <button className={styles.addToCartBtn} onClick={addToCartHandler}>Add to cart</button>
+      <button className={styles.addToCartBtn} onClick={addToCartHandler}>
+        Add to cart
+      </button>
     </div>
   );
 }
 AddToCart.propTypes = {
   product: PropTypes.object,
-}
+};
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -57,7 +74,8 @@ export default function ProductDetail() {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error</div>;
   return (
-    <>
+    <div>
+    <ToastContainer/>
       <div className={styles.product}>
         <img
           src={product.image}
@@ -71,7 +89,7 @@ export default function ProductDetail() {
         <div className={styles.productDetails}>
           <h3>{product.title}</h3>
           <p>${product.price}</p>
-          <AddToCart product={product}/>
+          <AddToCart product={product} />
           <div className={styles.overviewContainer}>
             <h3>OVERVIEW</h3>
             <p
@@ -110,6 +128,6 @@ export default function ProductDetail() {
           </table>
         </div>
       </div>
-    </>
+      </div>
   );
 }

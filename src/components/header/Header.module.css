@@ -24,6 +24,7 @@
 .cart {
     margin-left: auto;
     margin-right: 20px;
+    position: relative;
 }
 .nav ul li:hover:not(:nth-child(3)) {
     border-bottom: 1px solid #FF6B6B;
@@ -40,4 +41,16 @@ svg {
     height: 25px;
     vertical-align: -4px;
     margin: 0 auto;
+}
+.cartNum {
+    background-color: red;
+    color: white;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    font-size: 0.75rem;
+    border-radius: 50%;
+    position: absolute;
+    top: -18px;
+    right: -15px;
 }
