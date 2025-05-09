@@ -2,9 +2,9 @@ import { useParams } from "react-router-dom";
 import { useProduct } from "../getData/GetData";
 import styles from "./Product.module.css";
 import { useState, useEffect, useRef } from "react";
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext,useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
-import { toast,ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 function AddToCart({ product }) {
   const [quantity, setQuantity] = useState(1);
@@ -61,6 +61,7 @@ export default function ProductDetail() {
   const [showFullText, setShowFullText] = useState(false);
   const [needsToggle, setNeedsToggle] = useState(false);
   const textRef = useRef(null);
+  const navigate =useNavigate();
 
   useEffect(() => {
     if (textRef.current) {
@@ -71,11 +72,17 @@ export default function ProductDetail() {
     }
   }, [product?.description]);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error</div>;
+  if (loading) return <div style={{margin: "0px auto"}}>Loading...</div>;
+  if (error) return <div style={{margin: "0px auto"}}>Error</div>;
   return (
-    <div>
-    <ToastContainer/>
+    <div className={styles.productPageContainer}>
+      <button className={styles.backArrow} onClick={()=>navigate("/shop")}>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <title>back</title>
+          <path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" />
+        </svg>
+      </button>
+      <ToastContainer />
       <div className={styles.product}>
         <img
           src={product.image}
@@ -128,6 +135,6 @@ export default function ProductDetail() {
           </table>
         </div>
       </div>
-      </div>
+    </div>
   );
 }

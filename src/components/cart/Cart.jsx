@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import styles from "./Cart.module.css";
 import { Link } from "react-router-dom";
 import { useOutletContext } from "react-router-dom";
+import { useState } from "react";
 
 function Item({ item, removeItemHandler }) {
   return (
@@ -38,46 +39,76 @@ Item.propTypes = {
 
 export default function Cart() {
   const { cart, setCart } = useOutletContext();
+  const [showMsg, setShowMsg] = useState(false);
   console.log(cart);
 
   function removeItemHandler(itemid) {
     setCart((prev) => prev.filter((item) => item.product.id != itemid));
   }
-console.log(styles)
+  function getTotal() {
+    const total = cart.reduce((acc, cur) => {
+      acc += cur.product.price * cur.quantity;
+      return acc;
+    }, 0);
+    return total;
+  }
+  function checkoutHandler() {
+    setShowMsg(true);
+    setCart([]);
+  }
+
   return (
-    <div className={styles.cardContainer}>
-      {cart.length == 0 ? (
-        <div className={styles.emptyCartContainer}>
-          <h2>Your cart is empty</h2>
-          <p>Looks like you have not added anything yet.</p>
-          <Link to="/shop">Continue Shopping</Link>
-        </div>
-      ) : (
-        <div className={styles.cartContainer}>
-          <h2 className={styles.title}>Your Shopping Cart</h2>
-          <ul className={styles.cartItems}>
-            {cart.map((item) => (
-              <Item
-                key={item.product.id}
-                item={item}
-                removeItemHandler={removeItemHandler}
-              />
-            ))}
-          </ul>
-          <div className={styles.checkoutContainer}>
-            <h3 >Order Summary</h3>
-            <ul>
+    <>
+      <div className={styles.cardContainer}>
+        {cart.length == 0 ? (
+          <div className={styles.emptyCartContainer}>
+            <h2>Your cart is empty</h2>
+            <p>Looks like you have not added anything yet.</p>
+            <Link to="/shop">Continue Shopping</Link>
+          </div>
+        ) : (
+          <div className={styles.cartContainer}>
+            <h2 className={styles.title}>Your Shopping Cart</h2>
+            <ul className={styles.cartItems}>
               {cart.map((item) => (
-                <li key={item.product.id}>
-                  <div>{item.product.model}</div>
-                  <div className={styles.checkoutPrice}>${item.product.price*item.quantity}</div>
-                </li>
+                <Item
+                  key={item.product.id}
+                  item={item}
+                  removeItemHandler={removeItemHandler}
+                />
               ))}
             </ul>
-            <div>Total</div>
+            <div className={styles.checkoutContainer}>
+              <h3>Order Summary</h3>
+              <ul>
+                {cart.map((item) => (
+                  <li key={item.product.id} className={styles.checkoutProduct}>
+                    <div>{item.product.model}</div>
+                    <div className={styles.checkoutPrice}>
+                      ${item.product.price * item.quantity}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+              <div className={styles.checkoutTotal}>
+                Total
+                <div>${getTotal()}</div>
+              </div>
+              <button className={styles.checkoutBtn} onClick={checkoutHandler}>
+                Checkout
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+      {showMsg && (
+        <div className={styles.modalContainer}>
+          <div className={styles.msgContainer}>
+            <h3>Congrats! You have checked out. ^_^</h3>
+            <button onClick={()=> setShowMsg(false)}>Cancel</button>
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
