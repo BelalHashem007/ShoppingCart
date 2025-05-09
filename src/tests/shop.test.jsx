@@ -1,10 +1,12 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, waitFor, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { Card } from "../pages/Shop";
+import { Card, Shop } from "../pages/Shop";
 import useProducts from "../components/getData/GetData";
 import { Pagination } from "../pages/Shop";
 import { fireEvent } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
+import PropTypes from "prop-types";
 
 const object = {
   id: 3,
@@ -32,6 +34,12 @@ function HookWrapper({ page, limit, onData, onLoading }) {
   }
   return null;
 }
+HookWrapper.propTypes = {
+  page: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  limit: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  onData: PropTypes.func,
+  onLoading: PropTypes.func,
+};
 
 describe("Shop test", () => {
   describe("Card test", () => {
@@ -54,12 +62,12 @@ describe("Shop test", () => {
       render(<Card product={object} clickHandler={clickHandler} />);
       expect(clickHandler).not.toHaveBeenCalled();
     });
-    it("uses fallback image on error",()=> {
-        render(<Card product={object} clickHandler={() => {}} />);
-        const img =screen.getByRole("img");
-        fireEvent.error(img);
-        expect(img.src).toContain("No_Image_Available.jpg");
-    })
+    it("uses fallback image on error", () => {
+      render(<Card product={object} clickHandler={() => {}} />);
+      const img = screen.getByRole("img");
+      fireEvent.error(img);
+      expect(img.src).toContain("No_Image_Available.jpg");
+    });
   });
 
   describe("Fetching data test", () => {
@@ -147,23 +155,79 @@ describe("Shop test", () => {
       );
     });
   });
-  describe("Pagination test",()=>{
-    it("Pagination renders 8 buttons successfully",()=>{
-        render(<Pagination pages={[1,2,3,4,5,6,7,8]} clickPageHandler={()=>{}} currentPage={1}/>)
-        expect(screen.getAllByRole("button").length).toBe(8);
-    })
-    it("should call clickPageHandler when a button is clicked",async()=>{
-        const clickPageHandler = vi.fn()
-        const user = userEvent.setup();
-        render(<Pagination pages={[1,2,3,4,5,6,7,8]} clickPageHandler={clickPageHandler} currentPage={1}/>)
-        const button = screen.getByRole("button",{name:"3"});
-        await user.click(button);
-        expect(clickPageHandler).toHaveBeenCalled();
-    })
-    it("shouldn`t call clickPageHandler when there is no click on button",async()=>{
-        const clickPageHandler = vi.fn()
-        render(<Pagination pages={[1,2,3,4,5,6,7,8]} clickPageHandler={clickPageHandler} currentPage={1}/>)
-        expect(clickPageHandler).not.toHaveBeenCalled();
-    })
-  })
+  describe("Pagination test", () => {
+    it("Pagination renders 8 buttons successfully", () => {
+      render(
+        <Pagination
+          pages={[1, 2, 3, 4, 5, 6, 7, 8]}
+          clickPageHandler={() => {}}
+          currentPage={1}
+        />
+      );
+      expect(screen.getAllByRole("button").length).toBe(8);
+    });
+    it("should call clickPageHandler when a button is clicked", async () => {
+      const clickPageHandler = vi.fn();
+      const user = userEvent.setup();
+      render(
+        <Pagination
+          pages={[1, 2, 3, 4, 5, 6, 7, 8]}
+          clickPageHandler={clickPageHandler}
+          currentPage={1}
+        />
+      );
+      const button = screen.getByRole("button", { name: "3" });
+      await user.click(button);
+      expect(clickPageHandler).toHaveBeenCalled();
+    });
+    it("shouldn`t call clickPageHandler when there is no click on button", async () => {
+      const clickPageHandler = vi.fn();
+      render(
+        <Pagination
+          pages={[1, 2, 3, 4, 5, 6, 7, 8]}
+          clickPageHandler={clickPageHandler}
+          currentPage={1}
+        />
+      );
+      expect(clickPageHandler).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("Shop page as a whole works correctly", () => {
+    const data = {
+      message: "",
+      status: "",
+      products: [
+        {
+          id: 1,
+          title:
+            "Sony WH-1000XM3 Bluetooth Wireless Over Ear Headphones with Mic (Silver)",
+          image:
+            "https://storage.googleapis.com/fir-auth-1c3bc.appspot.com/1692947383286-714WUJlhbLS._SL1500_.jpg",
+          price: 773,
+          description:
+            "Digital noise cancelling : Industry leading Active Noise Cancellation (ANC) lends a personalized, virtually soundproof experience at any situation\r\nHi-Res Audio : A built-in amplifier integrated in HD Noise Cancelling Processor QN1 realises the best-in-class signal-to-noise ratio and low distortion for portable devices.\r\nDriver Unit : Powerful 40-mm drivers with Liquid Crystal Polymer (LCP) diaphragms make the headphones perfect for handling heavy beats and can reproduce a full range of frequencies up to 40 kHz.\r\nVoice assistant : Alexa enabled (In-built) for voice access to music, information and more. Activate with a simple touch. Frequency response: 4 Hz-40,000 Hz",
+          brand: "sony",
+          model: "WH-1000XM3",
+          color: "silver",
+          category: "audio",
+          discount: 11,
+        },
+      ],
+    };
+
+    it("shop page gets rendered", async () => {
+      vi.spyOn(globalThis, "fetch").mockResolvedValue({
+        json: () => Promise.resolve(data),
+      });
+      render(
+        <MemoryRouter>
+          <Shop />
+        </MemoryRouter>
+      );
+      await waitFor(() =>
+        expect(screen.getByRole("listitem")).toBeInTheDocument()
+      );
+    });
+  });
 });

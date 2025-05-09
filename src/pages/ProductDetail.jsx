@@ -1,12 +1,12 @@
 import { useParams } from "react-router-dom";
-import { useProduct } from "../getData/GetData";
+import { useProduct } from "../components/getData/GetData";
 import styles from "./Product.module.css";
 import { useState, useEffect, useRef } from "react";
 import { useOutletContext,useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { toast, ToastContainer } from "react-toastify";
 
-function AddToCart({ product }) {
+export function AddToCart({ product }) {
   const [quantity, setQuantity] = useState(1);
   const { cart, setCart } = useOutletContext();
   function addToCartHandler() {

@@ -6,6 +6,7 @@ export default defineConfig({
   plugins: [react()],
   test: {
     environment: "jsdom",
-    setupFiles: "./src/tests/setup.js"
+    setupFiles: "./src/tests/setup.js",
+    reporters: ['verbose']
   }
 })
