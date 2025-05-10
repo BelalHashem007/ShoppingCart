@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useOutletContext } from "react-router-dom";
 import { useState } from "react";
 
-function Item({ item, removeItemHandler }) {
+export function Item({ item, removeItemHandler }) {
   return (
     <li className={styles.cartItem}>
       <div className={styles.itemContainer}>
@@ -31,10 +31,52 @@ function Item({ item, removeItemHandler }) {
     </li>
   );
 }
+export function Checkout({ cart, getTotal, checkoutHandler }) {
+  return (
+    <div className={styles.checkoutContainer}>
+      <h3>Order Summary</h3>
+      <ul>
+        {cart.map((item) => (
+          <li key={item.product.id} className={styles.checkoutProduct}>
+            <div>{item.product.model}</div>
+            <div className={styles.checkoutPrice}>
+              ${item.product.price * item.quantity}
+            </div>
+          </li>
+        ))}
+      </ul>
+      <div className={styles.checkoutTotal}>
+        Total
+        <div>${getTotal()}</div>
+      </div>
+      <button className={styles.checkoutBtn} onClick={checkoutHandler}>
+        Checkout
+      </button>
+    </div>
+  );
+}
+export function CheckoutPopUp({ setShowMsg }) {
+  return (
+    <div className={styles.modalContainer}>
+      <div className={styles.msgContainer}>
+        <h3>Congrats! You have checked out. ^_^</h3>
+        <button onClick={() => setShowMsg(false)}>Cancel</button>
+      </div>
+    </div>
+  );
+}
 
 Item.propTypes = {
   item: PropTypes.object,
   removeItemHandler: PropTypes.func,
+};
+CheckoutPopUp.propTypes = {
+  setShowMsg: PropTypes.func,
+};
+Checkout.propTypes = {
+  cart: PropTypes.array,
+  getTotal: PropTypes.func,
+  checkoutHandler: PropTypes.func,
 };
 
 export default function Cart() {
@@ -78,37 +120,15 @@ export default function Cart() {
                 />
               ))}
             </ul>
-            <div className={styles.checkoutContainer}>
-              <h3>Order Summary</h3>
-              <ul>
-                {cart.map((item) => (
-                  <li key={item.product.id} className={styles.checkoutProduct}>
-                    <div>{item.product.model}</div>
-                    <div className={styles.checkoutPrice}>
-                      ${item.product.price * item.quantity}
-                    </div>
-                  </li>
-                ))}
-              </ul>
-              <div className={styles.checkoutTotal}>
-                Total
-                <div>${getTotal()}</div>
-              </div>
-              <button className={styles.checkoutBtn} onClick={checkoutHandler}>
-                Checkout
-              </button>
-            </div>
+            <Checkout
+              getTotal={getTotal}
+              checkoutHandler={checkoutHandler}
+              cart={cart}
+            />
           </div>
         )}
       </div>
-      {showMsg && (
-        <div className={styles.modalContainer}>
-          <div className={styles.msgContainer}>
-            <h3>Congrats! You have checked out. ^_^</h3>
-            <button onClick={()=> setShowMsg(false)}>Cancel</button>
-          </div>
-        </div>
-      )}
+      {showMsg && <CheckoutPopUp setShowMsg={setShowMsg} />}
     </>
   );
 }

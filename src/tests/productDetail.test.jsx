@@ -97,7 +97,7 @@ describe("ProductDetail page test", () => {
       );
     });
   });
-  describe.only("Testing the page as whole", () => {
+  describe("Testing the page as whole", () => {
     it("it renders correctly", async () => {
       vi.spyOn(globalThis, "fetch").mockResolvedValue({
         json: () => Promise.resolve(data),

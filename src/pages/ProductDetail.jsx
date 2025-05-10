@@ -10,7 +10,8 @@ export function AddToCart({ product }) {
   const [quantity, setQuantity] = useState(1);
   const { cart, setCart } = useOutletContext();
   function addToCartHandler() {
-    if (cart.filter((item) => item.product.id == product.id).length == 1) {
+    const existingItem = cart.find((item) => item.product.id == product.id);
+    if (existingItem) {
       setCart((prev) =>
         prev.map((item) =>
           item.product.id == product.id
@@ -19,12 +20,11 @@ export function AddToCart({ product }) {
         )
       );
       setQuantity(1);
-      toast("Product added to cart!");
     } else {
       setCart((prev) => [...prev, { product, quantity }]);
       setQuantity(1);
-      toast("Product added to cart!");
     }
+    toast("Product added to cart!");
   }
   return (
     <div className={styles.addToCartContainer}>

@@ -8,8 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "vitest",
-    "test multi": "vitest run --reporter=verbose"
+    "test": "vitest"
   },
   "dependencies": {
     "eslint-plugin-react": "^7.37.5",
