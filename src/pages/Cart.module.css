@@ -3,6 +3,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
     gap: 10px;
 }
 .emptyCartContainer h2{
@@ -140,7 +141,7 @@
     background-color: white;
     padding: 20px;
     border: var(--border);
-    width: 50%;
+    width: 80%;
     display: flex;
     flex-direction: column;
     align-items: center;
