@@ -26,7 +26,7 @@
     margin-right: 20px;
     position: relative;
 }
-.nav ul li:hover:not(:nth-child(3)) {
+.nav ul li:hover {
     border-bottom: 1px solid #FF6B6B;
 }
 .nav ul li {
@@ -39,8 +39,6 @@
 svg {
     width: 30px;
     height: 25px;
-    vertical-align: -4px;
-    margin: 0 auto;
 }
 .cartNum {
     background-color: red;
@@ -53,4 +51,33 @@ svg {
     position: absolute;
     top: -18px;
     right: -15px;
+}
+.cart a {
+    display: flex;
+    align-items: center;
+}
+@media(max-width:600px){
+    .header{
+        padding: 10px;
+    }
+}
+@media(max-width:450px){
+    .header{
+        padding: 5px;
+        gap: 10px;
+        height: 50px;
+    }
+    .nav ul { 
+        gap: 15px;
+    }
+    .cart svg {
+        width: 15px;
+        height: 15px;
+    }
+    .cartNum{
+        width: 15px;
+        height: 18px;
+        top: -10px;
+        right: -12px;
+    }
 }

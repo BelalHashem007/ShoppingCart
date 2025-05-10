@@ -1,7 +1,8 @@
-.home{
-    display: flex;
-    flex-direction: column;
-    gap: 100px;
+.home {
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
+  margin: 20px;
 }
 .topSection .title {
   text-align: center;
@@ -19,7 +20,7 @@
   background: linear-gradient(to bottom, #f8f9fa 0%, #e9ecef 100%);
 }
 .shopBtn {
-  width: 160px  ;
+  width: 160px;
   height: 40px;
   font-size: 1rem;
   background-color: #03a9f4;
@@ -48,8 +49,30 @@
   flex-direction: column;
   gap: 15px;
   text-align: center;
+  align-items: center;
+  justify-content: center;
 }
 .bottomSection svg {
   width: 70px;
   height: 70px;
+}
+@media (max-width: 1200px) {
+  .topSection {
+    padding: 25px 50px 15px 50px;
+  }
+}
+@media (max-width: 500px) {
+  .topSection {
+    padding: 25px 20px 15px 20px;
+  }
+  .home {
+    margin: 5px;
+  }
+  .bottomSection {
+    gap: 10px;
+  }
+  .bottomSection svg {
+    width: 50px;
+    height: 50px;
+  }
 }

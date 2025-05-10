@@ -1,11 +1,11 @@
 .card {
-    width: 440px;
+    max-width: 440px;
     padding: 10px;
     text-decoration: none;
     display: flex;
     flex-direction: column;
     gap: 5px;
-    height: 400px;
+    min-height: 400px;
 }
 .card:hover {
     cursor: pointer;
@@ -15,6 +15,7 @@
     width: 400px;
     height:300px;
 }
+
 .products {
     display: flex;
     flex-wrap: wrap;
@@ -44,4 +45,52 @@
 }
 .pageBtn.active {
     background-color: lightblue;
+}
+@media(max-width:1200px) {
+    .cardImg {
+        width: 300px;
+        height:250px;
+    }
+    .card {
+        max-width: 340px;
+    }
+}
+@media(max-width:1000px) {
+    .cardImg {
+        width: 250px;
+        height:200px;
+    }
+    .card {
+        max-width: 290px;
+    }
+}
+@media(max-width:600px) {
+    .cardImg {
+        width: 200px;
+        height:150px;
+    }
+    .card {
+        max-width: 200px;
+        min-height: 320px;
+    }
+}
+@media(max-width:450px) {
+    .cardImg {
+        width: 150px;
+        height:100px;
+    }
+    .card {
+        max-width: 150px;
+        min-height: 280px;
+    }
+    .products{
+        gap: 15px;
+    }
+    .btnsContainer {
+        gap :5px;
+    }
+    .pageBtn {
+        width:30px;
+        height: 30px;
+    }
 }

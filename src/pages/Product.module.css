@@ -1,12 +1,12 @@
 .productImg {
     width: 100%;
-    height: auto;
+    height: 100%;
     display: block;
-    object-fit: contain;
+    object-fit: fill;
 }
 .product{
     display: grid;
-    grid-template-columns: 0.7fr 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 40px;
     padding: 20px;
 }
@@ -129,4 +129,45 @@
   }
   .productPageContainer {
     position: relative;
+  }
+  @media(max-width:1200px) {
+    .productDetails {
+      gap: 15px;
+    }
+    .overviewContainer{
+      margin-top: 0;
+      margin-right: 5px;
+    }
+    .product{
+      gap: 20px;
+    }
+  }
+  @media(max-width:800px) {
+    .product {
+      grid-template-columns: 1fr;
+    }
+    .productSpecification{
+      grid-area:auto;
+    }
+  }
+  @media(max-width:600px) {
+    .overviewContainer{
+      padding: 5px;
+    }
+    .addToCartContainer{
+      gap: 10px;
+    }
+    .product{
+      gap: 10px;
+    }
+  }
+  @media(max-width:450px) {
+    .addToCartBtn{
+      width: 120px;
+    }
+    .productSpecification{
+      width: 100%;
+      padding: 5px;
+      margin-right: 5px;
+    }
   }

@@ -9,3 +9,18 @@ body {
     --toastify-toast-top:100px;
     --toastify-color-progress-light: #F44336;
 }
+@media(max-width:800px){
+    html {
+        font-size: 21px;
+    }
+}
+@media(max-width:600px){
+    html {
+        font-size: 18px;
+    }
+}
+@media(max-width:450px){
+    html {
+        font-size: 16px;
+    }
+}

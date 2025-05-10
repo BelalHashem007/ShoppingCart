@@ -16,7 +16,7 @@ export function Item({ item, removeItemHandler }) {
             e.target.src = "/src/assets/No_Image_Available.jpg";
           }}
         />
-        <div>
+        <div className={styles.itemText}>
           <div className={styles.model}>{item.product.model}</div>
           <div className={styles.itemPrice}>${item.product.price}</div>
           <div>Quantity: {item.quantity}</div>
